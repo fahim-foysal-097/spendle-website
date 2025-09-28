@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spendle — Expense Tracker</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- local styles -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="icon" href="assets/icon.png" />
+    <meta name="theme-color" content="#0f1724">
+</head>
+
+<body class="app-body">
+
+    <!-- decorative blobs -->
+    <div class="bg-blobs" aria-hidden="true">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container navbar-glass">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <span class="brand-badge m-1">S</span>
+                <div>
+                    <div class="h5 m-0">Spendle</div>
+                    <small class="text-muted">Expense Tracker</small>
+                </div>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Screenshots</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#download">Download</a></li>
+                </ul>
+                <ul class="navbar-nav ms-auto m-1">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="releases.html">Release Notes</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-5 fw-bold">Track spending. Stay sane.</h1>
+                <p class="lead">Beautiful, private, and simple expense tracking for Android — insights, charts and
+                    one-tap add.</p>
+
+                <div class="mt-4 d-flex gap-3 flex-wrap">
+                    <a href="#download" class="btn btn-glow btn-lg">Download APK</a>
+                    <a href="#features" class="btn btn-outline-light btn-lg">See features</a>
+                </div>
+
+                <ul class="mt-4 small text-muted">
+                    <li>Privacy-friendly: local data.</li>
+                    <li>Lightweight: small size and fast app.</li>
+                </ul>
+            </div>
+
+            <div class="col-lg-6 text-center mt-4 mt-lg-0">
+                <div class="device-card shadow-soft">
+                    <img src="assets/screenshots/s1.jpg" alt="Spendle screenshot" class="screenshot img-fluid">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- FEATURES -->
+    <section id="features" class="container">
+        <div class="section-inner">
+            <h2 class="section-title">Features</h2>
+            <p class="text-muted">All the essentials you need — no clutter.</p>
+
+            <div class="row g-4 mt-3">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Track & Categorize</h5>
+                            <p class="card-text text-muted">Track & categorize your expenses easily.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Custom Categories</h5>
+                            <p class="card-text text-muted">Create and manage your own categories.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Insights & Charts</h5>
+                            <p class="card-text text-muted">Insights and colorful charts for smarter decisions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Clean UI</h5>
+                            <p class="card-text text-muted">Simple, clean, and intuitive user interface.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Offline Mode</h5>
+                            <p class="card-text text-muted">Works fully offline - your data stays on your device.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Built-in Calculator</h5>
+                            <p class="card-text text-muted">Calculate expenses without leaving the app.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Import & Export</h5>
+                            <p class="card-text text-muted">Import & export your database effortlessly.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Add Notes</h5>
+                            <p class="card-text text-muted">Attach notes to any expense for more context.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">App Locker</h5>
+                            <p class="card-text text-muted">Protect your app with a passcode or fingerprint.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Voice Commands</h5>
+                            <p class="card-text text-muted">Control the app with voice commands.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">Daily Reminder</h5>
+                            <p class="card-text text-muted">Receive daily reminders to log your expenses.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- GALLERY -->
+    <section id="gallery" class="container mt-4">
+        <div class="section-inner">
+            <h2 class="section-title">Screenshots</h2>
+            <p class="text-muted">Tap any card to view a larger preview.</p>
+
+            <div class="row g-3 mt-3">
+                <!-- s1..s8 -->
+                <div class="col-6 col-md-3">
+                    <div class="card gallery-card" tabindex="0" data-full="assets/screenshots/s1.jpg">
+                        <img src="assets/screenshots/s1.jpg" class="card-img-top" alt="Screenshot 1">
+                        <div class="card-body py-2"><small class="text-muted">Overview</small></div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <div class="card gallery-card" tabindex="0" data-full="assets/screenshots/s2.jpg">
+                        <img src="assets/screenshots/s2.jpg" class="card-img-top" alt="Screenshot 2">
+                        <div class="card-body py-2"><small class="text-muted">Quick Add</small></div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <div class="card gallery-card" tabindex="0" data-full="assets/screenshots/s3.jpg">
+                        <img src="assets/screenshots/s3.jpg" class="card-img-top" alt="Screenshot 3">
+                        <div class="card-body py-2"><small class="text-muted">Categories</small></div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <div class="card gallery-card" tabindex="0" data-full="assets/screenshots/s4.jpg">
+                        <img src="assets/screenshots/s4.jpg" class="card-img-top" alt="Screenshot 4">
+                        <div class="card-body py-2"><small class="text-muted">Reports</small></div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <div class="card gallery-card" tabindex="0" data-full="assets/screenshots/s5.jpg">
+                        <img src="assets/screenshots/s5.jpg" class="card-img-top" alt="Screenshot 5">
+                        <div class="card-body py-2"><small class="text-muted">Budget</small></div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <div class="card gallery-card" tabindex="0" data-full="assets/screenshots/s6.jpg">
+                        <img src="assets/screenshots/s6.jpg" class="card-img-top" alt="Screenshot 6">
+                        <div class="card-body py-2"><small class="text-muted">Export</small></div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <div class="card gallery-card" tabindex="0" data-full="assets/screenshots/s7.jpg">
+                        <img src="assets/screenshots/s7.jpg" class="card-img-top" alt="Screenshot 7">
+                        <div class="card-body py-2"><small class="text-muted">Settings</small></div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <div class="card gallery-card" tabindex="0" data-full="assets/screenshots/s8.jpg">
+                        <img src="assets/screenshots/s8.jpg" class="card-img-top" alt="Screenshot 8">
+                        <div class="card-body py-2"><small class="text-muted">Backup</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="container">
+        <div class="section-inner">
+            <h2 class="section-title">About Spendle</h2>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <p class="text-muted">Spendle is built to make expense tracking painless: minimal steps, great UX,
+                        and local-first data privacy.</p>
+                    <p class="text-muted mb-0">Designed for people who hate bookkeeping but want control.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-card card">
+                        <div class="card-body">
+                            <strong>Version</strong>
+                            <p class="mb-1 mt-1">Latest Version</p>
+                            <div id="release-info" class="text-muted small">v1.5.0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DOWNLOAD -->
+    <section id="download" class="container">
+        <div class="section-inner">
+            <h2 class="section-title">Download</h2>
+            <p class="text-muted">Choose the APK that matches your device architecture.</p>
+
+            <div class="row g-3 mt-3 align-items-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="download-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">arm64-v8a</h5>
+                            <p class="card-text small text-muted">Recommended for modern phones.</p>
+                            <a id="btn-arm64" class="btn btn-download w-100"
+                                href="https://github.com/fahim-foysal-097/Spendle/releases/download/v1.5.0/spendle-v1.5.0-arm64-v8a.apk"
+                                target="_blank" rel="noopener">Download arm64-v8a</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="download-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">armeabi-v7a</h5>
+                            <p class="card-text small text-muted">Older ARM 32-bit devices.</p>
+                            <a id="btn-armeabi" class="btn btn-download w-100"
+                                href="https://github.com/fahim-foysal-097/Spendle/releases/download/v1.5.0/spendle-v1.5.0-armeabi-v7a.apk"
+                                target="_blank" rel="noopener">Download armeabi-v7a</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="download-card card">
+                        <div class="card-body">
+                            <h5 class="card-title">x86_64</h5>
+                            <p class="card-text small text-muted">Emulators & Intel devices.</p>
+                            <a id="btn-x86" class="btn btn-download w-100"
+                                href="https://github.com/fahim-foysal-097/Spendle/releases/download/v1.5.0/spendle-v1.5.0-x86_64.apk"
+                                target="_blank" rel="noopener">Download x86_64</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 small text-muted">
+                <strong>Thanks for Visiting</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-5 mt-6">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div><small class="text-muted">© <span id="curYear"></span> Spendle - Built with care</small></div>
+            <div>
+                <a href="https://github.com/fahim-foysal-097/Spendle" class="text-muted small">Source</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SINGLE Screenshot Modal -->
+    <div class="modal fade" id="screenshotModal" tabindex="-1" aria-labelledby="screenshotModalLabel" aria-hidden="true"
+        data-bs-backdrop="true" data-bs-keyboard="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-body p-0 d-flex justify-content-center align-items-center position-relative"
+                    style="min-height:60vh;">
+                    <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+                    <!-- Constrain the image for nice fit and clicking it will close the modal (js) -->
+                    <img id="modalImage" src="" alt="Full screenshot" class="img-fluid rounded"
+                        style="max-height:calc(100vh - 120px); object-fit:contain; cursor:zoom-out;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <!-- site script -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
