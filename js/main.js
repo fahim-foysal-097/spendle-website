@@ -8,12 +8,20 @@
     x86: "https://github.com/fahim-foysal-097/Spendle/releases/download/v1.5.0/spendle-v1.5.0-x86_64.apk",
   };
 
+  // slideshow state (gallery modal)
+  let galleryInterval = null;
+  let galleryIndex = 0;
+  let galleryImages = [];
+  const SLIDE_DELAY = 3000; // 3 sec
+
   document.addEventListener("DOMContentLoaded", () => {
     setCurrentYear();
     initButtons();
     setupGalleryLightbox();
     initSmoothScroll();
     animateSections();
+    initPageTransitions();
+    // report button behavior (opens new tab - defined in HTML anchor)
   });
 
   function setCurrentYear() {
@@ -21,7 +29,7 @@
     if (el) el.textContent = new Date().getFullYear();
   }
 
-  /* ---------- BUTTONS / DOWNLOAD ---------- */
+  /* ---------- DOWNLOAD BUTTONS ---------- */
   function initButtons() {
     const mapping = [
       { id: "btn-arm64", key: "arm64" },
@@ -34,6 +42,7 @@
       if (!btn) return;
       btn.target = "_self";
       btn.href = LINKS[key];
+
       btn.addEventListener(
         "click",
         async (e) => {
@@ -45,13 +54,9 @@
             e.button === 1
           )
             return;
-
           e.preventDefault();
           const url = LINKS[key];
-          if (!url) {
-            flashButtonError(btn, "Not available");
-            return;
-          }
+          if (!url) return flashButtonError(btn, "Not available");
           await downloadApk(url, btn);
         },
         { passive: false }
@@ -74,6 +79,7 @@
     btn.textContent = loadingText;
     btn.classList.add("disabled");
   }
+
   function resetButton(btn) {
     if (btn.dataset._prevText) {
       btn.textContent = btn.dataset._prevText;
@@ -90,7 +96,11 @@
         mode: "cors",
         cache: "no-cache",
       });
-      if (!resp.ok) return (window.location.href = url);
+      if (!resp.ok) {
+        // fallback to same-tab navigation (keeps app content visible until the browser handles the response)
+        window.location.href = url;
+        return;
+      }
 
       const blob = await resp.blob();
       const filename =
@@ -99,11 +109,12 @@
         "spendle.apk";
       const blobUrl = URL.createObjectURL(blob);
       triggerDownload(blobUrl, filename);
-      setTimeout(() => URL.revokeObjectURL(blobUrl), 30_000);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 30000);
       btn.textContent = "Done ✓";
-      setTimeout(() => resetButton(btn), 1400);
+      setTimeout(() => resetButton(btn), 1200);
     } catch (err) {
       console.warn("Fetch error:", err);
+      // fallback navigation - keeps same tab
       window.location.href = url;
     }
   }
@@ -115,10 +126,9 @@
       const match =
         /filename\*=UTF-8''(.+)$/.exec(dispo) ||
         /filename="?([^"]+)"?/.exec(dispo);
-      return match ? decodeURIComponent(match[1]) : null;
-    } catch (e) {
-      return null;
-    }
+      if (match) return decodeURIComponent(match[1]);
+    } catch (e) {}
+    return null;
   }
 
   function deriveFilenameFromUrl(url) {
@@ -126,9 +136,8 @@
       const u = new URL(url);
       const parts = u.pathname.split("/");
       return parts.pop() || parts.pop();
-    } catch (e) {
-      return null;
-    }
+    } catch (e) {}
+    return null;
   }
 
   function triggerDownload(objectUrl, filename) {
@@ -140,53 +149,100 @@
     a.remove();
   }
 
-  /* ---------- GALLERY ---------- */
+  /* ---------- GALLERY SLIDESHOW & FULL-PAGE BLUR ---------- */
   function setupGalleryLightbox() {
     const modalEl = document.getElementById("screenshotModal");
     const modalImage = document.getElementById("modalImage");
-    if (!modalEl || !modalImage) return;
+    const siteRoot = document.getElementById("site-root");
+    if (!modalEl || !modalImage || !siteRoot) return;
 
-    let bsModal;
-    try {
-      bsModal = bootstrap.Modal.getOrCreateInstance(modalEl, {
-        backdrop: true,
-        keyboard: true,
-      });
-    } catch (err) {
-      return;
-    }
+    // build gallery image list from gallery-card elements
+    const cards = Array.from(document.querySelectorAll(".gallery-card"));
+    galleryImages = cards
+      .map((c) => c.getAttribute("data-full"))
+      .filter(Boolean);
 
-    document.querySelectorAll(".gallery-card").forEach((card) => {
+    const bsModal = bootstrap.Modal.getOrCreateInstance(modalEl, {
+      backdrop: true,
+      keyboard: true,
+    });
+
+    const showImageAt = (idx) => {
+      if (!galleryImages.length) return;
+      galleryIndex =
+        ((idx % galleryImages.length) + galleryImages.length) %
+        galleryImages.length;
+      const next = galleryImages[galleryIndex];
+
+      // crossfade: remove visible -> change src -> visible after load
+      modalImage.classList.remove("visible");
+      setTimeout(() => {
+        modalImage.src = next;
+        modalImage.onload = () => {
+          requestAnimationFrame(() => modalImage.classList.add("visible"));
+        };
+      }, 180);
+    };
+
+    const startGallery = (startIdx = 0) => {
+      stopGallery();
+      showImageAt(startIdx);
+      galleryInterval = setInterval(() => {
+        galleryIndex = (galleryIndex + 1) % galleryImages.length;
+        showImageAt(galleryIndex);
+      }, SLIDE_DELAY);
+    };
+
+    const stopGallery = () => {
+      if (galleryInterval) {
+        clearInterval(galleryInterval);
+        galleryInterval = null;
+      }
+    };
+
+    // clicking a card opens modal and starts slideshow from that index
+    cards.forEach((card, idx) => {
       card.addEventListener("click", (e) => {
         e.preventDefault();
-        const full = card.getAttribute("data-full");
-        if (!full) return;
-        modalImage.src = full;
+        if (!galleryImages.length) return;
+        startGallery(idx);
+        // blur the site-root so modal appears over a blurred page
+        siteRoot.classList.add("blurred");
         bsModal.show();
+      });
+      card.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter" || ev.key === " ") {
+          ev.preventDefault();
+          card.click();
+        }
       });
     });
 
-    modalImage.addEventListener("click", () => {
-      try {
-        bsModal.hide();
-      } catch {}
-    });
+    // close when clicked
+    modalEl.addEventListener("click", () => bsModal.hide());
+
+    // cleanup on hide
     modalEl.addEventListener("hidden.bs.modal", () => {
+      stopGallery();
       modalImage.src = "";
+      modalImage.classList.remove("visible");
+      siteRoot.classList.remove("blurred");
+    });
+
+    modalEl.addEventListener("shown.bs.modal", () => {
+      // ensure visible class after shown
+      requestAnimationFrame(() => modalImage.classList.add("visible"));
     });
   }
 
-  /* ---------- SMOOTH SCROLL & SECTION FADE ---------- */
+  /* ---------- SMOOTH SCROLL & SECTION REVEAL ---------- */
   function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         const target = document.querySelector(this.getAttribute("href"));
         if (!target) return;
         e.preventDefault();
-        window.scrollTo({
-          top: target.offsetTop - 50,
-          behavior: "smooth",
-        });
+        window.scrollTo({ top: target.offsetTop - 50, behavior: "smooth" });
       });
     });
   }
@@ -195,8 +251,8 @@
     const sections = document.querySelectorAll("section, .hero, .container");
     sections.forEach((sec) => {
       sec.style.opacity = 0;
-      sec.style.transform = "translateY(25px)";
-      sec.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+      sec.style.transform = "translateY(18px)";
+      sec.style.transition = "opacity 0.45s ease, transform 0.45s ease";
     });
 
     const observer = new IntersectionObserver(
@@ -211,39 +267,36 @@
       { threshold: 0.15 }
     );
 
-    sections.forEach((sec) => observer.observe(sec));
+    sections.forEach((s) => observer.observe(s));
   }
-})();
 
-/* ---------- PAGE TRANSITIONS ---------- */
-document.addEventListener("DOMContentLoaded", () => {
-  // Fade in on page load
-  document.body.classList.add("fade-in");
+  /* ---------- PAGE TRANSITIONS ---------- */
+  function initPageTransitions() {
+    document.body.classList.add("fade-in");
 
-  // Attach click handlers to internal links
-  document.querySelectorAll("a[href]").forEach((link) => {
-    const href = link.getAttribute("href");
+    document.querySelectorAll("a[href]").forEach((link) => {
+      const href = link.getAttribute("href");
+      if (!href) return;
 
-    // Only handle same-domain HTML links
-    if (
-      !href.startsWith("#") &&
-      !href.startsWith("http") &&
-      !href.startsWith("mailto:") &&
-      !href.endsWith(".apk")
-    ) {
+      // ignore anchors, external, mailto, and apk links
+      if (
+        href.startsWith("#") ||
+        href.startsWith("http") ||
+        href.startsWith("mailto:") ||
+        href.endsWith(".apk")
+      )
+        return;
+
       link.addEventListener("click", (e) => {
-        e.preventDefault();
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)
+          return;
         const url = link.href;
-
-        // Add fade-out
+        if (!url) return;
+        e.preventDefault();
         document.body.classList.remove("fade-in");
         document.body.classList.add("fade-out");
-
-        // Wait for transition to finish before navigating
-        setTimeout(() => {
-          window.location.href = url;
-        }, 400); // match the CSS duration (0.5s)
+        setTimeout(() => (window.location.href = url), 200);
       });
-    }
-  });
-});
+    });
+  }
+})();

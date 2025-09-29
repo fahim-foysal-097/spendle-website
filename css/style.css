@@ -405,6 +405,107 @@ footer {
   }
 }
 
+/* slightly dark backdrop inside modal content for focus */
+.modal-content.bg-transparent {
+  background: rgba(6, 10, 25, 0.65);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  overflow: hidden;
+}
+#modalImage {
+  cursor: not-allowed;
+}
+
+/* ---- modal crossfade helpers ---- */
+/* modal image fade */
+#modalImage {
+  transition: opacity 0.45s ease;
+  opacity: 0.4;
+  will-change: opacity;
+}
+#modalImage.visible {
+  opacity: 1;
+}
+
+/* modal content darken */
+.modal-content.bg-transparent {
+  background: rgba(6, 10, 25, 0.75);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ---- full-page blur when modal open ---- */
+#site-root.blurred {
+  filter: blur(8px) brightness(0.86);
+  transition: filter 0.22s ease;
+  pointer-events: none; /* prevent interaction while modal open */
+  user-select: none;
+}
+
+/* re-enable pointer events for modal close button (modal is outside site-root) */
+/* ---- report button ---- */
+.btn-report {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1200;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(
+    90deg,
+    rgba(110, 78, 255, 1) 0%,
+    rgba(110, 78, 255, 0.96) 30%,
+    rgba(0, 210, 255, 0.96) 70%,
+    rgba(0, 210, 255, 1) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 120% 100%;
+  background-position: center;
+
+  /* subtle inset highlight + drop shadow for depth */
+  box-shadow: 0 12px 36px rgba(6, 10, 25, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  /* avoid rasterization artifacts */
+  -webkit-font-smoothing: antialiased;
+  transform: translateZ(0);
+
+  /* accessibility */
+  outline: none;
+}
+
+/* focus style */
+.btn-report:focus {
+  box-shadow: 0 12px 36px rgba(6, 10, 25, 0.6),
+    0 0 0 4px rgba(110, 78, 255, 0.12);
+}
+
+/* slightly smaller on phones */
+@media (max-width: 575px) {
+  .btn-report {
+    right: 12px;
+    bottom: 12px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}
+
+/* ---- page transition classes ---- */
+body.fade-in {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+body.fade-out {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
 /* accessibility: reduce motion */
 @media (prefers-reduced-motion: reduce) {
   .blob,
@@ -424,4 +525,5 @@ footer {
 .release-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.1);
 }
