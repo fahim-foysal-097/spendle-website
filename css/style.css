@@ -373,7 +373,6 @@ section {
 .gallery-card {
   overflow: hidden;
   border-radius: 12px;
-  cursor: pointer;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
   border: 1px solid rgba(255, 255, 255, 0.03);
 }
@@ -430,9 +429,6 @@ footer {
   border-radius: 12px;
   overflow: hidden;
 }
-#modalImage {
-  cursor: not-allowed;
-}
 
 /* ---- modal crossfade helpers ---- */
 /* modal image fade */
@@ -473,7 +469,6 @@ footer {
   font-weight: 600;
   color: #fff;
   border: none;
-  cursor: pointer;
 
   background-repeat: no-repeat;
   background-size: 120% 100%;
@@ -552,4 +547,15 @@ body.fade-out {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   background: rgba(255, 255, 255, 0.1);
+}
+
+/* hide cursor */
+strong,
+.btn,
+.btn-close,
+.nav-link,
+.navbar-brand,
+.text-muted,
+.btn-close {
+  cursor: none !important;
 }

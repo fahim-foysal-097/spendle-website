@@ -1,0 +1,129 @@
+/* css/custom-cursor.css
+   Hidden on touch/coarse-pointer devices, respects prefers-reduced-motion.
+*/
+
+:root {
+  /* tweakable tokens */
+  --cursor-size: 34px; /* slightly larger */
+  --cursor-ring-width: 1.5px;
+  --ripple-size: 10px; /* small ripple */
+  --ripple-duration: 320ms; /* short, snappy ripple */
+}
+
+/* core cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0);
+  transition: transform 28ms linear, background-color 120ms linear,
+    opacity 120ms linear;
+  z-index: 2147483647;
+  will-change: transform;
+  /* Use your theme accents: aqua (accent2) + purple (accent1) */
+  background: linear-gradient(
+    135deg,
+    rgba(var(--accent2), 0.14),
+    rgba(var(--accent1), 0.1)
+  );
+  border: var(--cursor-ring-width) solid rgba(var(--accent2), 0.6);
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+
+/* inner subtle ring for depth */
+.custom-cursor::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  pointer-events: none;
+}
+
+/* hover (interactive elements) */
+.custom-cursor.cursor--hover {
+  transform: translate3d(-50%, -50%, 0) scale(1.45);
+  background: linear-gradient(
+    135deg,
+    rgba(var(--accent2), 0.22),
+    rgba(var(--accent1), 0.18)
+  );
+  border-color: rgba(var(--accent1), 0.72);
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.45),
+    0 0 18px rgba(var(--accent2), 0.06);
+}
+
+/* pressed */
+.custom-cursor.cursor--down {
+  transform: translate3d(-50%, -50%, 0) scale(0.92);
+  opacity: 0.98;
+}
+
+/* ripple */
+.cursor-ripple {
+  position: fixed;
+  width: var(--ripple-size);
+  height: var(--ripple-size);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(var(--accent2), 0.16) 0%,
+    rgba(var(--accent1), 0.06) 60%,
+    transparent 100%
+  );
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: none;
+  z-index: 2147483646;
+  will-change: transform, opacity;
+  animation: cursor-ripple var(--ripple-duration) cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 6px 16px rgba(2, 6, 23, 0.14);
+}
+
+@keyframes cursor-ripple {
+  to {
+    transform: translate(-50%, -50%) scale(8);
+    opacity: 0;
+  }
+}
+
+/* hide native cursor on desktop (keep text caret in inputs) */
+@media (pointer: fine) {
+  html,
+  body {
+    cursor: none !important;
+  }
+  input,
+  textarea,
+  select,
+  [contenteditable] {
+    cursor: text !important;
+  }
+}
+
+/* don't show custom cursor on touch/coarse devices */
+@media (pointer: coarse), (hover: none) {
+  .custom-cursor,
+  .cursor-ripple {
+    display: none !important;
+  }
+}
+
+/* reduced motion: simpler behavior */
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor {
+    transition: none !important;
+    will-change: auto !important;
+  }
+  .cursor-ripple {
+    animation-duration: 140ms !important;
+    transform: translate(-50%, -50%) scale(6) !important;
+    opacity: 0.15 !important;
+  }
+}
