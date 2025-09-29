@@ -44,18 +44,6 @@
       /* ignore */
     }
 
-    // Kill blob animations
-    try {
-      const animatedEls = document.querySelectorAll(".blob, .blob *");
-      animatedEls.forEach((el) => {
-        el.style.animation = "none";
-        el.style.transition = "none";
-        el.style.display = "none";
-      });
-    } catch (e) {
-      /* ignore */
-    }
-
     // Short modal image transition
     try {
       const modalImg = document.getElementById("modalImage");
