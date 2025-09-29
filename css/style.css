@@ -548,14 +548,3 @@ body.fade-out {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   background: rgba(255, 255, 255, 0.1);
 }
-
-/* hide cursor */
-strong,
-.btn,
-.btn-close,
-.nav-link,
-.navbar-brand,
-.text-muted,
-.btn-close {
-  cursor: none !important;
-}

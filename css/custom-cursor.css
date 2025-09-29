@@ -6,8 +6,8 @@
   /* tweakable tokens */
   --cursor-size: 34px; /* slightly larger */
   --cursor-ring-width: 1.5px;
-  --ripple-size: 10px; /* small ripple */
-  --ripple-duration: 320ms; /* short, snappy ripple */
+  --ripple-size: 20px; /* small ripple */
+  --ripple-duration: 420ms; /* short, snappy ripple */
 }
 
 /* core cursor */
@@ -24,7 +24,6 @@
     opacity 120ms linear;
   z-index: 2147483647;
   will-change: transform;
-  /* Use your theme accents: aqua (accent2) + purple (accent1) */
   background: linear-gradient(
     135deg,
     rgba(var(--accent2), 0.14),
@@ -47,7 +46,7 @@
   pointer-events: none;
 }
 
-/* hover (interactive elements) */
+/* hover on interactive elements */
 .custom-cursor.cursor--hover {
   transform: translate3d(-50%, -50%, 0) scale(1.45);
   background: linear-gradient(
@@ -60,13 +59,13 @@
     0 0 18px rgba(var(--accent2), 0.06);
 }
 
-/* pressed */
+/* pressed state */
 .custom-cursor.cursor--down {
   transform: translate3d(-50%, -50%, 0) scale(0.92);
   opacity: 0.98;
 }
 
-/* ripple */
+/* click ripple - bigger and snappier */
 .cursor-ripple {
   position: fixed;
   width: var(--ripple-size);
@@ -88,7 +87,7 @@
 
 @keyframes cursor-ripple {
   to {
-    transform: translate(-50%, -50%) scale(8);
+    transform: translate(-50%, -50%) scale(12);
     opacity: 0;
   }
 }
@@ -96,7 +95,14 @@
 /* hide native cursor on desktop (keep text caret in inputs) */
 @media (pointer: fine) {
   html,
-  body {
+  body,
+  strong,
+  .btn,
+  .btn-close,
+  .nav-link,
+  .navbar-brand,
+  .text-muted,
+  .btn-close {
     cursor: none !important;
   }
   input,
@@ -115,7 +121,7 @@
   }
 }
 
-/* reduced motion: simpler behavior */
+/* reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .custom-cursor {
     transition: none !important;
