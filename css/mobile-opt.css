@@ -9,7 +9,7 @@
     display: none !important;
   }
 
-  /* reduce heavy box-shadows and long transitions (but preserve short transitions) */
+  /* reduce heavy box-shadows and transitions */
   .device-card,
   .feature-card,
   .download-card,
@@ -18,12 +18,10 @@
   .gallery-card,
   .section-inner {
     box-shadow: none !important;
-    /* Keep short transitions so UI still feels smooth */
-    transition: transform 120ms ease, box-shadow 120ms ease !important;
     transform: none !important;
   }
 
-  /* images: prefer natural sizing and lazy decoding by browser */
+  /* images: natural sizing, no forced rasterization */
   .gallery-card img,
   .screenshot,
   #modalImage {
@@ -33,57 +31,68 @@
     height: auto;
   }
 
-  /* modal backdrop: keep full-screen coverage, reduce blur intensity */
+  /* modal backdrop: no blur, lighter overlay */
   .modal-backdrop {
     position: fixed;
     inset: 0;
-    z-index: 1050; /* same stacking intent as bootstrap */
+    z-index: 1050;
     background: rgba(6, 10, 25, 0.55) !important;
-    /* lighter blur for mobile for performance and readability */
-    backdrop-filter: blur(4px) !important;
-    -webkit-backdrop-filter: blur(4px) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
-  /* modal content: slightly less blur and faster dialog transition on mobile */
+  /* modal content: no blur, rounded corners */
   .modal-content.bg-transparent {
-    backdrop-filter: blur(3px) !important;
-    -webkit-backdrop-filter: blur(3px) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
     border-radius: 12px;
   }
 
-  /* shorten dialog open/close so modal feels snappy */
+  /* shorten dialog open/close */
   .modal.fade .modal-dialog {
-    transition: transform 140ms ease, opacity 120ms ease !important;
+    transition: transform 120ms ease, opacity 120ms ease !important;
   }
 
-  /* modal image crossfade made short but preserved */
+  /* modal image: fast fade */
   #modalImage {
-    transition: opacity 140ms linear !important;
+    transition: opacity 120ms linear !important;
     opacity: 1 !important;
   }
 
-  /* page fade transitions: shorter for mobile */
-  body.fade-in {
-    transition: opacity 0.12s ease !important;
-  }
+  /* page fade transitions: shorter */
+  body.fade-in,
   body.fade-out {
-    transition: opacity 0.12s ease !important;
+    transition: opacity 100ms ease !important;
   }
 
-  /* allow the full-page blur (applied by #site-root.blurred) to prevent interaction */
+  /* disable full-page blur on modal open, keep darkening only */
   #site-root.blurred {
-    filter: blur(6px) brightness(0.88);
-    transition: filter 0.22s ease;
-    pointer-events: none; /* prevent taps behind the modal */
+    filter: brightness(0.88) !important;
+    transition: filter 0.18s ease !important;
+    pointer-events: none;
     user-select: none;
   }
 
-  /* keep navbar collapse transitions to remain But shorten them slightly for mobile for a snappier feel */
-  .navbar-collapse.collapse {
-    transition: max-height 180ms ease, visibility 0ms linear 0ms;
+  /* navbar: reduce blur & drop shadow for better perf */
+  .navbar-glass {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(12, 22, 48, 0.8) !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    transition: none !important; /* kill navbar transitions */
   }
 
-  /* reduce hover effects (mobile doesn't use hover) */
+  /* collapse: no transitions for snappier nav toggle */
+  .navbar-collapse,
+  .navbar-collapse.collapse,
+  .navbar-toggler,
+  .navbar {
+    
+    transition: all 0.2s !important; /* no animation */
+  }
+
+  /* disable hover effects */
   .gallery-card:hover,
   .device-card:hover,
   .feature-card:hover,
@@ -93,24 +102,23 @@
     box-shadow: none !important;
   }
 
-  /* report button smaller, simpler */
+  /* report button: lighter and smaller */
   .btn-report {
     right: 10px !important;
     bottom: 10px !important;
     padding: 8px 10px !important;
-    box-shadow: 0 6px 18px rgba(6, 10, 25, 0.45) !important;
+    box-shadow: 0 4px 12px rgba(6, 10, 25, 0.45) !important;
   }
 
-  /* keep scroll reveal transitions, but shorten durations to reduce CPU usage */
+  /* scroll reveal transitions: keep but shorten */
   section,
   .hero,
   .container {
-    /* keep transitions so fade-in while scrolling still happens */
-    transition: opacity 260ms ease, transform 260ms ease !important;
-    will-change: transform, opacity;
+    transition: opacity 180ms ease, transform 180ms ease !important;
+    will-change: opacity, transform;
   }
 
-  /* accessibility: honor prefers-reduced-motion */
+  /* accessibility: reduced motion */
   @media (prefers-reduced-motion: reduce) {
     * {
       transition: none !important;
@@ -126,20 +134,26 @@ body.mobile-optimized .bg-blobs {
 }
 body.mobile-optimized .modal-backdrop {
   background: rgba(6, 10, 25, 0.55) !important;
-  backdrop-filter: blur(4px) !important;
-  -webkit-backdrop-filter: blur(4px) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 body.mobile-optimized .modal-content.bg-transparent {
-  backdrop-filter: blur(3px) !important;
-  -webkit-backdrop-filter: blur(3px) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 body.mobile-optimized section,
 body.mobile-optimized .hero,
 body.mobile-optimized .container {
-  transition: opacity 260ms ease !important;
+  transition: opacity 180ms ease !important;
   transform: none !important;
 }
 body.mobile-optimized .gallery-card img,
 body.mobile-optimized .screenshot {
   will-change: auto !important;
+}
+body.mobile-optimized .navbar-glass {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(12, 22, 48, 0.8) !important;
+  box-shadow: none !important;
 }

@@ -20,9 +20,7 @@
         hero.setAttribute("loading", "lazy");
 
       // gallery
-      const galleryImgs = Array.from(
-        document.querySelectorAll(".gallery-card img")
-      );
+      const galleryImgs = document.querySelectorAll(".gallery-card img");
       galleryImgs.forEach((img) => {
         if (!img.getAttribute("loading")) img.setAttribute("loading", "lazy");
         // reduce forced size changes
@@ -33,30 +31,7 @@
       // ignore
     }
 
-    // Reduce paint/will-change hints but keep transitions so scroll fade-in still works
-    try {
-      const revealTargets = document.querySelectorAll(
-        "section, .hero, .container"
-      );
-      revealTargets.forEach((t) => {
-        t.style.willChange = "opacity, transform";
-      });
-    } catch (e) {
-      /* ignore */
-    }
-
-    // Shorten modal image transitions
-    try {
-      const modalImg = document.getElementById("modalImage");
-      if (modalImg) {
-        modalImg.style.transition = "opacity 140ms linear";
-        modalImg.style.cursor = "default";
-      }
-    } catch (e) {
-      /* ignore */
-    }
-
-    // Reduce heavy shadows to subtle borders for less paint cost
+    // Reduce shadows
     try {
       const shadowTargets = document.querySelectorAll(
         ".device-card, .section-inner, .card, .feature-card, .download-card, .about-card"
@@ -69,7 +44,7 @@
       /* ignore */
     }
 
-    // Stop heavy CSS animations if present (best-effort)
+    // Kill blob animations
     try {
       const animatedEls = document.querySelectorAll(".blob, .blob *");
       animatedEls.forEach((el) => {
@@ -81,7 +56,16 @@
       /* ignore */
     }
 
-    // Accessibility: respect prefers-reduced-motion
+    // Short modal image transition
+    try {
+      const modalImg = document.getElementById("modalImage");
+      if (modalImg) {
+        modalImg.style.transition = "opacity 120ms linear";
+        modalImg.style.cursor = "default";
+      }
+    } catch (e) {}
+
+    // Accessibility: reduced motion
     if (
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -136,10 +120,5 @@
       if (window.innerWidth <= 640) applyMobileOptimizations();
       else removeMobileOptimizations();
     });
-  }
-
-  // Run early but after DOM is available
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {});
   }
 })();
