@@ -1,5 +1,6 @@
 (() => {
-  // Hardcoded fallback links (v1.5.0)
+  // Hardcoded release info
+  const RELEASE_VERSION = "v1.5.0";
   const LINKS = {
     arm64:
       "https://github.com/fahim-foysal-097/Spendle/releases/download/v1.5.0/spendle-v1.5.0-arm64-v8a.apk",
@@ -16,17 +17,22 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     setCurrentYear();
+    setReleaseInfo();
     initButtons();
     setupGalleryLightbox();
     initSmoothScroll();
     animateSections();
     initPageTransitions();
-    // report button behavior (opens new tab - defined in HTML anchor)
   });
 
   function setCurrentYear() {
     const el = document.getElementById("curYear");
     if (el) el.textContent = new Date().getFullYear();
+  }
+
+  function setReleaseInfo() {
+    const el = document.getElementById("release-info");
+    if (el) el.textContent = RELEASE_VERSION;
   }
 
   /* ---------- DOWNLOAD BUTTONS ---------- */
@@ -40,12 +46,14 @@
     mapping.forEach(({ id, key }) => {
       const btn = document.getElementById(id);
       if (!btn) return;
+
       btn.target = "_self";
       btn.href = LINKS[key];
 
       btn.addEventListener(
         "click",
         async (e) => {
+          // allow modifier clicks
           if (
             e.metaKey ||
             e.ctrlKey ||
@@ -55,8 +63,12 @@
           )
             return;
           e.preventDefault();
+
           const url = LINKS[key];
-          if (!url) return flashButtonError(btn, "Not available");
+          if (!url) {
+            flashButtonError(btn, "Not available");
+            return;
+          }
           await downloadApk(url, btn);
         },
         { passive: false }
@@ -90,45 +102,33 @@
 
   async function downloadApk(url, btn) {
     setButtonLoading(btn);
+
     try {
       const resp = await fetch(url, {
         method: "GET",
         mode: "cors",
         cache: "no-cache",
       });
+
       if (!resp.ok) {
-        // fallback to same-tab navigation (keeps app content visible until the browser handles the response)
+        // fallback navigation (same tab)
         window.location.href = url;
         return;
       }
 
       const blob = await resp.blob();
-      const filename =
-        getFilenameFromResponse(resp) ||
-        deriveFilenameFromUrl(url) ||
-        "spendle.apk";
+      const filename = deriveFilenameFromUrl(url) || "spendle.apk";
       const blobUrl = URL.createObjectURL(blob);
       triggerDownload(blobUrl, filename);
       setTimeout(() => URL.revokeObjectURL(blobUrl), 30000);
+
       btn.textContent = "Done ✓";
       setTimeout(() => resetButton(btn), 1200);
     } catch (err) {
-      console.warn("Fetch error:", err);
-      // fallback navigation - keeps same tab
+      console.warn("Download error:", err);
+      // fallback to navigation so user can still download via browser
       window.location.href = url;
     }
-  }
-
-  function getFilenameFromResponse(response) {
-    try {
-      const dispo = response.headers.get("content-disposition");
-      if (!dispo) return null;
-      const match =
-        /filename\*=UTF-8''(.+)$/.exec(dispo) ||
-        /filename="?([^"]+)"?/.exec(dispo);
-      if (match) return decodeURIComponent(match[1]);
-    } catch (e) {}
-    return null;
   }
 
   function deriveFilenameFromUrl(url) {
@@ -154,7 +154,7 @@
     const modalEl = document.getElementById("screenshotModal");
     const modalImage = document.getElementById("modalImage");
     const siteRoot = document.getElementById("site-root");
-    if (!modalEl || !modalImage || !siteRoot) return;
+    if (!modalEl || !modalImage) return;
 
     // build gallery image list from gallery-card elements
     const cards = Array.from(document.querySelectorAll(".gallery-card"));
@@ -174,13 +174,12 @@
         galleryImages.length;
       const next = galleryImages[galleryIndex];
 
-      // crossfade: remove visible -> change src -> visible after load
+      // crossfade
       modalImage.classList.remove("visible");
       setTimeout(() => {
         modalImage.src = next;
-        modalImage.onload = () => {
+        modalImage.onload = () =>
           requestAnimationFrame(() => modalImage.classList.add("visible"));
-        };
       }, 180);
     };
 
@@ -206,8 +205,7 @@
         e.preventDefault();
         if (!galleryImages.length) return;
         startGallery(idx);
-        // blur the site-root so modal appears over a blurred page
-        siteRoot.classList.add("blurred");
+        if (siteRoot) siteRoot.classList.add("blurred");
         bsModal.show();
       });
       card.addEventListener("keydown", (ev) => {
@@ -226,11 +224,10 @@
       stopGallery();
       modalImage.src = "";
       modalImage.classList.remove("visible");
-      siteRoot.classList.remove("blurred");
+      if (siteRoot) siteRoot.classList.remove("blurred");
     });
 
     modalEl.addEventListener("shown.bs.modal", () => {
-      // ensure visible class after shown
       requestAnimationFrame(() => modalImage.classList.add("visible"));
     });
   }
