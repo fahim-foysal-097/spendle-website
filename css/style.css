@@ -461,13 +461,6 @@ footer {
   border: none;
   cursor: pointer;
 
-  background: linear-gradient(
-    90deg,
-    rgba(110, 78, 255, 1) 0%,
-    rgba(110, 78, 255, 0.96) 30%,
-    rgba(0, 210, 255, 0.96) 70%,
-    rgba(0, 210, 255, 1) 100%
-  );
   background-repeat: no-repeat;
   background-size: 120% 100%;
   background-position: center;
