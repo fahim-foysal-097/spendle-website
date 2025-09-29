@@ -9,18 +9,6 @@
     display: none !important;
   }
 
-  /* reduce heavy box-shadows and transitions */
-  .device-card,
-  .feature-card,
-  .download-card,
-  .about-card,
-  .release-card,
-  .gallery-card,
-  .section-inner {
-    box-shadow: none !important;
-    transform: none !important;
-  }
-
   /* images: natural sizing, no forced rasterization */
   .gallery-card img,
   .screenshot,
@@ -83,23 +71,12 @@
     transition: none !important; /* kill navbar transitions */
   }
 
-  /* collapse: no transitions for snappier nav toggle */
+  /* nav toggle */
   .navbar-collapse,
   .navbar-collapse.collapse,
   .navbar-toggler,
   .navbar {
-    
-    transition: all 0.2s !important; /* no animation */
-  }
-
-  /* disable hover effects */
-  .gallery-card:hover,
-  .device-card:hover,
-  .feature-card:hover,
-  .download-card:hover,
-  .release-card:hover {
-    transform: none !important;
-    box-shadow: none !important;
+    transition: all 0.08s !important;
   }
 
   /* report button: lighter and smaller */
