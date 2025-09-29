@@ -75,8 +75,9 @@
   .navbar-collapse,
   .navbar-collapse.collapse,
   .navbar-toggler,
+  .nav-open,
   .navbar {
-    transition: all 0.08s !important;
+    transition: none !important;
   }
 
   /* report button: lighter and smaller */
