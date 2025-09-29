@@ -1,0 +1,145 @@
+/* mobile-opt.css
+   Mobile-focused performance overrides.
+   Applies only for small viewports or when .mobile-optimized is present.
+*/
+
+@media (max-width: 640px), (pointer: coarse) {
+  /* hide decorative blobs (expensive filters & animations) */
+  .bg-blobs {
+    display: none !important;
+  }
+
+  /* reduce heavy box-shadows and long transitions (but preserve short transitions) */
+  .device-card,
+  .feature-card,
+  .download-card,
+  .about-card,
+  .release-card,
+  .gallery-card,
+  .section-inner {
+    box-shadow: none !important;
+    /* Keep short transitions so UI still feels smooth */
+    transition: transform 120ms ease, box-shadow 120ms ease !important;
+    transform: none !important;
+  }
+
+  /* images: prefer natural sizing and lazy decoding by browser */
+  .gallery-card img,
+  .screenshot,
+  #modalImage {
+    image-rendering: auto;
+    will-change: auto;
+    max-height: none;
+    height: auto;
+  }
+
+  /* modal backdrop: keep full-screen coverage, reduce blur intensity */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1050; /* same stacking intent as bootstrap */
+    background: rgba(6, 10, 25, 0.55) !important;
+    /* lighter blur for mobile for performance and readability */
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+  }
+
+  /* modal content: slightly less blur and faster dialog transition on mobile */
+  .modal-content.bg-transparent {
+    backdrop-filter: blur(3px) !important;
+    -webkit-backdrop-filter: blur(3px) !important;
+    border-radius: 12px;
+  }
+
+  /* shorten dialog open/close so modal feels snappy */
+  .modal.fade .modal-dialog {
+    transition: transform 140ms ease, opacity 120ms ease !important;
+  }
+
+  /* modal image crossfade made short but preserved */
+  #modalImage {
+    transition: opacity 140ms linear !important;
+    opacity: 1 !important;
+  }
+
+  /* page fade transitions: shorter for mobile */
+  body.fade-in {
+    transition: opacity 0.12s ease !important;
+  }
+  body.fade-out {
+    transition: opacity 0.12s ease !important;
+  }
+
+  /* allow the full-page blur (applied by #site-root.blurred) to prevent interaction */
+  #site-root.blurred {
+    filter: blur(6px) brightness(0.88);
+    transition: filter 0.22s ease;
+    pointer-events: none; /* prevent taps behind the modal */
+    user-select: none;
+  }
+
+  /* keep navbar collapse transitions to remain But shorten them slightly for mobile for a snappier feel */
+  .navbar-collapse.collapse {
+    transition: max-height 180ms ease, visibility 0ms linear 0ms;
+  }
+
+  /* reduce hover effects (mobile doesn't use hover) */
+  .gallery-card:hover,
+  .device-card:hover,
+  .feature-card:hover,
+  .download-card:hover,
+  .release-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* report button smaller, simpler */
+  .btn-report {
+    right: 10px !important;
+    bottom: 10px !important;
+    padding: 8px 10px !important;
+    box-shadow: 0 6px 18px rgba(6, 10, 25, 0.45) !important;
+  }
+
+  /* keep scroll reveal transitions, but shorten durations to reduce CPU usage */
+  section,
+  .hero,
+  .container {
+    /* keep transitions so fade-in while scrolling still happens */
+    transition: opacity 260ms ease, transform 260ms ease !important;
+    will-change: transform, opacity;
+  }
+
+  /* accessibility: honor prefers-reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      transition: none !important;
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
+
+/* Helper class usable via JS to force mobile-optimized behavior outside the media query */
+body.mobile-optimized .bg-blobs {
+  display: none !important;
+}
+body.mobile-optimized .modal-backdrop {
+  background: rgba(6, 10, 25, 0.55) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+body.mobile-optimized .modal-content.bg-transparent {
+  backdrop-filter: blur(3px) !important;
+  -webkit-backdrop-filter: blur(3px) !important;
+}
+body.mobile-optimized section,
+body.mobile-optimized .hero,
+body.mobile-optimized .container {
+  transition: opacity 260ms ease !important;
+  transform: none !important;
+}
+body.mobile-optimized .gallery-card img,
+body.mobile-optimized .screenshot {
+  will-change: auto !important;
+}
