@@ -34,7 +34,7 @@
     // Reduce shadows
     try {
       const shadowTargets = document.querySelectorAll(
-        ".device-card, .section-inner, .card, .feature-card, .download-card, .about-card"
+        " .section-inner, .card, .feature-card, .download-card, .about-card"
       );
       shadowTargets.forEach((el) => {
         el.style.boxShadow = "none";
