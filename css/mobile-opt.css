@@ -61,6 +61,10 @@
     opacity: 1 !important;
   }
 
+  .device-card {
+    box-shadow: 1px 1px 18px 5px rgba(146, 148, 248, 0.2) !important;
+  }
+
   /* page fade transitions: shorter */
   body.fade-in,
   body.fade-out {
