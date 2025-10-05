@@ -3,10 +3,10 @@
   const RELEASE_VERSION = "v1.6.0";
   const LINKS = {
     arm64:
-      "https://github.com/fahim-foysal-097/Spendle/releases/download/v1.6.0/spendle-v1.6.0-arm64-v8a.apk",
+      "https://github.com/fahim-foysal-097/Trackedify/releases/download/v1.6.0/spendle-v1.6.0-arm64-v8a.apk",
     armeabi:
-      "https://github.com/fahim-foysal-097/Spendle/releases/download/v1.6.0/spendle-v1.6.0-armeabi-v7a.apk",
-    x86: "https://github.com/fahim-foysal-097/Spendle/releases/download/v1.6.0/spendle-v1.6.0-x86_64.apk",
+      "https://github.com/fahim-foysal-097/Trackedify/releases/download/v1.6.0/spendle-v1.6.0-armeabi-v7a.apk",
+    x86: "https://github.com/fahim-foysal-097/Trackedify/releases/download/v1.6.0/spendle-v1.6.0-x86_64.apk",
   };
 
   // slideshow state (gallery modal)
