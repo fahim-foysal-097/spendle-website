@@ -157,3 +157,93 @@ body.mobile-optimized .navbar-glass {
   background: rgba(12, 22, 48, 0.8) !important;
   box-shadow: none !important;
 }
+
+/* mobile-layout-overrides */
+
+/* primary mobile layout rules */
+@media (max-width: 720px) {
+  .btn-glow,
+  .btn-outline-light {
+    padding: 11px 12px;
+    font-size: 0.95rem;
+  }
+
+  .btn-outline-light {
+    width: 100% !important;
+  }
+
+  /* features into two columns at most; individual cards take full width */
+  #features .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  #features .col-lg-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+  .feature-card .card-body {
+    padding: 0.9rem;
+  }
+
+  /* gallery: keep 2 columns, smaller images */
+  #gallery .col-6 {
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+  }
+  .gallery-card img {
+    height: 150px;
+    object-fit: cover;
+  }
+
+  /* download / system cards: more compact */
+  .download-card .card-body,
+  .about-card .card-body,
+  .card .card-body {
+    padding: 0.85rem;
+  }
+
+  /* footer stacks vertically */
+  footer .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  /* modal: avoid huge margins on phones */
+  .modal-dialog {
+    margin: 0.5rem;
+    max-width: 98%;
+  }
+  .modal-body {
+    padding: 0.5rem;
+  }
+
+  /* touch targets and spacing for quick actions */
+  .btn-download {
+    padding: 10px 10px;
+    font-size: 0.95rem;
+  }
+
+  /* make small text a bit smaller to avoid wrapping issues */
+  .text-muted {
+    font-size: 0.92rem;
+  }
+
+  /* slightly reduce blob sizes for phones */
+  .b1,
+  .b2,
+  .b3 {
+    opacity: 0.18;
+    filter: blur(44px);
+  }
+}
+
+/* very small phones */
+@media (max-width: 420px) {
+  /* features must be single column */
+  #features .col-md-6,
+  #features .col-lg-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
