@@ -131,45 +131,19 @@
   }
 }
 
-/* Helper class usable via JS to force mobile-optimized behavior outside the media query */
-body.mobile-optimized .modal-backdrop {
-  background: rgba(6, 10, 25, 0.55) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-body.mobile-optimized .modal-content.bg-transparent {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-body.mobile-optimized section,
-body.mobile-optimized .hero,
-body.mobile-optimized .container {
-  transition: opacity 180ms ease !important;
-  transform: none !important;
-}
-body.mobile-optimized .gallery-card img,
-body.mobile-optimized .screenshot {
-  will-change: auto !important;
-}
-body.mobile-optimized .navbar-glass {
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  background: rgba(12, 22, 48, 0.8) !important;
-  box-shadow: none !important;
-}
-
 /* mobile-layout-overrides */
 
 /* primary mobile layout rules */
 @media (max-width: 720px) {
   .btn-glow,
   .btn-outline-light {
+    width: 100%;
     padding: 11px 12px;
     font-size: 0.95rem;
   }
 
-  .btn-outline-light {
-    width: 100% !important;
+  .btn-report {
+    width: auto !important;
   }
 
   /* features into two columns at most; individual cards take full width */
@@ -246,4 +220,31 @@ body.mobile-optimized .navbar-glass {
     flex: 0 0 100%;
     max-width: 100%;
   }
+}
+
+/* Helper class usable via JS to force mobile-optimized behavior outside the media query */
+body.mobile-optimized .modal-backdrop {
+  background: rgba(6, 10, 25, 0.55) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body.mobile-optimized .modal-content.bg-transparent {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body.mobile-optimized section,
+body.mobile-optimized .hero,
+body.mobile-optimized .container {
+  transition: opacity 180ms ease !important;
+  transform: none !important;
+}
+body.mobile-optimized .gallery-card img,
+body.mobile-optimized .screenshot {
+  will-change: auto !important;
+}
+body.mobile-optimized .navbar-glass {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(12, 22, 48, 0.8) !important;
+  box-shadow: none !important;
 }
