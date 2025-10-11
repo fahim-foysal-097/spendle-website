@@ -310,7 +310,8 @@ section {
 /* subtle hover */
 .about-card:hover,
 .feature-card:hover,
-.download-card:hover {
+.download-card:hover,
+.system-card:hover {
   transform: translateY(-6px);
   transition: transform 0.18s ease;
   box-shadow: 0 26px 70px rgba(2, 6, 23, 0.45);
@@ -334,6 +335,16 @@ section {
 .btn-outline-light {
   border-radius: 12px;
   padding: 10px 16px;
+}
+
+/* different looking button */
+.btn-dif {
+  color: #000;
+  background-color: #fff;
+}
+.btn-dif:hover {
+  background-color: transparent;
+  color: #fff;
 }
 
 /* download buttons */
